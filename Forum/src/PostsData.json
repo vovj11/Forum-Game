@@ -1,0 +1,162 @@
+[
+  {
+    "id": 1,
+    "topic": "Tópico do Post 1",
+    "message": "Mensagem do Post 1",
+    "creator": "Vital",
+    "likes": 10,
+    "dislikes": 3
+  },
+  {
+    "id": 2,
+    "topic": "Tópico do Post 2",
+    "message": "Mensagem do Post 2",
+    "creator": "Autor do Post 2",
+    "likes": 5,
+    "dislikes": 2
+  },
+  {
+    "id": 3,
+    "topic": "Tópico do Post 3",
+    "message": "Mensagem do Post 3",
+    "creator": "Autor do Post 3",
+    "likes": 8,
+    "dislikes": 1
+  },
+  {
+    "id": 4,
+    "topic": "Tópico do Post 4",
+    "message": "Mensagem do Post 4",
+    "creator": "Autor do Post 4",
+    "likes": 12,
+    "dislikes": 4
+  },
+  {
+    "id": 5,
+    "topic": "Tópico do Post 5",
+    "message": "Mensagem do Post 5",
+    "creator": "Autor do Post 5",
+    "likes": 6,
+    "dislikes": 2
+  },
+  {
+    "id": 6,
+    "topic": "Tópico do Post 6",
+    "message": "Mensagem do Post 6",
+    "creator": "Autor do Post 6",
+    "likes": 15,
+    "dislikes": 3
+  },
+  {
+    "id": 7,
+    "topic": "Tópico do Post 7",
+    "message": "Mensagem do Post 7",
+    "creator": "Autor do Post 7",
+    "likes": 7,
+    "dislikes": 1
+  },
+  {
+    "id": 8,
+    "topic": "Tópico do Post 8",
+    "message": "Mensagem do Post 8",
+    "creator": "Autor do Post 8",
+    "likes": 9,
+    "dislikes": 2
+  },
+  {
+    "id": 9,
+    "topic": "Tópico do Post 9",
+    "message": "Mensagem do Post 9",
+    "creator": "Autor do Post 9",
+    "likes": 11,
+    "dislikes": 3
+  },
+  {
+    "id": 10,
+    "topic": "Tópico do Post 10",
+    "message": "Mensagem do Post 10",
+    "creator": "Autor do Post 10",
+    "likes": 13,
+    "dislikes": 2
+  },
+  {
+    "id": 11,
+    "topic": "Tópico do Post 11",
+    "message": "Mensagem do Post 11",
+    "creator": "Autor do Post 11",
+    "likes": 14,
+    "dislikes": 5
+  },
+  {
+    "id": 12,
+    "topic": "Tópico do Post 12",
+    "message": "Mensagem do Post 12",
+    "creator": "Autor do Post 12",
+    "likes": 16,
+    "dislikes": 1
+  },
+  {
+    "id": 13,
+    "topic": "Tópico do Post 13",
+    "message": "Mensagem do Post 13",
+    "creator": "Autor do Post 13",
+    "likes": 10,
+    "dislikes": 3
+  },
+  {
+    "id": 14,
+    "topic": "Tópico do Post 14",
+    "message": "Mensagem do Post 14",
+    "creator": "Autor do Post 14",
+    "likes": 8,
+    "dislikes": 2
+  },
+  {
+    "id": 15,
+    "topic": "Tópico do Post 15",
+    "message": "Mensagem do Post 15",
+    "creator": "Autor do Post 15",
+    "likes": 7,
+    "dislikes": 1
+  },
+  {
+    "id": 16,
+    "topic": "Tópico do Post 16",
+    "message": "Mensagem do Post 16",
+    "creator": "Autor do Post 16",
+    "likes": 11,
+    "dislikes": 4
+  },
+  {
+    "id": 17,
+    "topic": "Tópico do Post 17",
+    "message": "Mensagem do Post 17",
+    "creator": "Autor do Post 17",
+    "likes": 9,
+    "dislikes": 3
+  },
+  {
+    "id": 18,
+    "topic": "Tópico do Post 18",
+    "message": "Mensagem do Post 18",
+    "creator": "Autor do Post 18",
+    "likes": 12,
+    "dislikes": 2
+  },
+  {
+    "id": 19,
+    "topic": "Tópico do Post 19",
+    "message": "Mensagem do Post 19",
+    "creator": "Autor do Post 19",
+    "likes": 15,
+    "dislikes": 6
+  },
+  {
+    "id": 20,
+    "topic": "Tópico do Post 20",
+    "message": "Mensagem do Post 20",
+    "creator": "Autor do Post 20",
+    "likes": 13,
+    "dislikes": 2
+  }
+]

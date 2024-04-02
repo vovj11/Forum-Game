@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48">
+          {/* Letras VF em neon */}
+          <text x="50%" y="50%" font-family="Arial" font-size="16" fill="#9400d3" filter="url(#neonEffect)" text-anchor="middle" dominant-baseline="central">VF</text>
+          {/* Definição do efeito de neon */}
+          <filter id="neonEffect" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
+            <feComponentTransfer in="blur" result="glow">
+              <feFuncA type="table" tableValues="0 1 0" />
+            </feComponentTransfer>
+            <feBlend in="SourceGraphic" in2="glow" mode="screen" />
+          </filter>
+        </svg>
