@@ -66,19 +66,75 @@ const Button = styled.button`
   }
 `;
 
-const NewPost = () => {
-  const [title, setTitle] = useState('');
+const NewPost = ({ user, AttPage }) => {
   const [topic, setTopic] = useState('');
   const [message, setMessage] = useState('');
+  const [keyWord, setKeyWord] = useState('');
+  const [like, setLike] = useState(0);
+  const [dislikes, setDislikes] = useState(0);
+  const UrlDataBase =
+    'https://forum-gamificado-postdata-default-rtdb.firebaseio.com/';
+
+  console.log('userNewPost:', user);
+
+  const formatDate = (date) => {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString();
+    const year = date.getFullYear().toString();
+
+    return `${day}/${month}/${year}`;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log('Novo post criado:', { title, topic, message });
+    console.log('user:', user);
 
-    setTitle('');
+    if (!user || !user.name) {
+      console.error('Usuário não está logado ou nome não está definido.');
+      return;
+    }
+
+    const keyWords = keyWord
+      .split(',')
+      .map((kw) => kw.trim())
+      .filter((kw) => kw !== '');
+
+    const postData = {
+      topic,
+      message,
+      keyWords,
+      publicationDate: formatDate(new Date()),
+      creator: user.name,
+      like,
+      dislikes,
+    };
+
+    fetch(`${UrlDataBase}/PostsData.json`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(postData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Novo Post Criado:', data);
+        setTopic('');
+        setMessage('');
+        setKeyWord('');
+        if (AttPage) {
+          AttPage();
+        }
+      })
+      .catch((error) => {
+        console.error('Erro ao criar o post:', error);
+      });
+    console.log('Novo post criado:', { topic, message, keyWord });
+
     setTopic('');
     setMessage('');
+    setKeyWord('');
   };
 
   return (
@@ -102,6 +158,16 @@ const NewPost = () => {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             rows="6"
+            required
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label htmlFor="keyWord">Palavras-Chave:</Label>
+          <Input
+            type="text"
+            id="keyWord"
+            value={keyWord}
+            onChange={(e) => setKeyWord(e.target.value)}
             required
           />
         </FormGroup>

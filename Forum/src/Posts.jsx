@@ -60,18 +60,21 @@ const Button = styled.button`
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
+  const UrlDataBase =
+    'https://forum-gamificado-postdata-default-rtdb.firebaseio.com/';
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('./src/PostsData.json');
-        if (!response.ok) {
-          throw new Error('Erro ao carregar os dados');
-        }
+        const response = await fetch(`${UrlDataBase}/PostsData.json`);
         const data = await response.json();
-        setPosts(data);
+
+        if (data) {
+          const topico = Object.values(data);
+          setPosts(topico);
+        }
       } catch (error) {
-        console.error('Erro ao carregar os dados:', error);
+        console.error('Erro ao buscar os tópicos:', error);
       }
     };
 

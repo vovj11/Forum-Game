@@ -8,15 +8,28 @@ import SearchPost from './SearchPost';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('Posts');
+  const [loggedInUser, setLoggedInUser] = useState(null);
+
+  const handleLoginSuccess = (user) => {
+    console.log('Dados do usuário recebidos:', user);
+    setLoggedInUser(user);
+    console.log('Login bem-sucedido!');
+    console.log('loggedInUserHeader após login:', loggedInUser);
+  };
 
   const renderPage = () => {
     switch (currentPage) {
       case 'Posts':
         return <Posts />;
       case 'PerfilAccess':
-        return <PerfilAccess />;
+        return <PerfilAccess user={loggedInUser} />;
       case 'NewPost':
-        return <NewPost />;
+        return (
+          <NewPost
+            user={loggedInUser}
+            AttPage={() => setCurrentPage('Posts')}
+          />
+        );
       case 'SearchPost':
         return <SearchPost />;
       default:
@@ -26,7 +39,11 @@ function App() {
 
   return (
     <main>
-      <Header setCurrentPage={setCurrentPage} />
+      <Header
+        setCurrentPage={setCurrentPage}
+        isLoggedIn={handleLoginSuccess}
+        user={loggedInUser}
+      />
       {renderPage()}
     </main>
   );

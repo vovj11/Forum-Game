@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 const PopupContainer = styled.div`
@@ -75,10 +75,62 @@ const SignupPopup = ({ onClose, onSignup }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const UrlDataBase =
+    'https://forum-gamificado-infnet-default-rtdb.firebaseio.com';
+
+  const [existingUsers, setExistingUsers] = useState([]);
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch(`${UrlDataBase}/PostsData.json`);
+        const data = await response.json();
+
+        if (data) {
+          const topics = Object.values(data);
+          setPostsData(topics);
+        }
+      } catch (error) {
+        console.error('Erro ao buscar os tópicos:', error);
+      }
+    };
+  }, []);
+
+  const isEmailTaken = (email) => {
+    return existingUsers.some((user) => user.email === email);
+  };
 
   const handleSignup = (e) => {
     e.preventDefault();
     onSignup({ name, email, password });
+
+    if (isEmailTaken(email)) {
+      alert('O email já está em uso.');
+      return;
+    }
+
+    const user = {
+      name,
+      email,
+      password,
+      score: 0,
+    };
+    fetch(`${UrlDataBase}/users.json`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(user),
+    })
+      .then((response) => {
+        if (response.ok) {
+          setName('');
+          setEmail('');
+          setPassword('');
+        } else {
+          throw new Error('Erro ao criar o usuário.');
+        }
+      })
+      .catch((error) => {
+        console.error(`Erro ao criar o usuário: ${error.message}`);
+      });
     onClose();
   };
 

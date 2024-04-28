@@ -1,0 +1,16 @@
+{
+  "users": {
+    "user1": {
+      "userName": "Vital",
+      "email": "vital@gmail.com",
+      "password": "1",
+      "score": 5
+    },
+    "user2": {
+      "userName": "Joelson",
+      "email": "joelson@gmail.com",
+      "password": "2",
+      "score": 5
+    }
+  }
+}

@@ -84,7 +84,7 @@ const DrawerText = styled.span`
   letter-spacing: 0.00938em;
 `;
 
-const Drawer = ({ isOpen, onClose, setCurrentPage }) => {
+const Drawer = ({ isOpen, onClose, setCurrentPage, handleUserChange }) => {
   const drawerRef = useRef();
 
   useEffect(() => {
@@ -100,6 +100,12 @@ const Drawer = ({ isOpen, onClose, setCurrentPage }) => {
       document.removeEventListener('mousedown', handleOutsideClick);
     };
   }, [onClose]);
+
+  const handleNewPostClick = () => {
+    setCurrentPage('NewPost');
+    onClose();
+    handleUserChange();
+  };
 
   return (
     <>
@@ -126,7 +132,7 @@ const Drawer = ({ isOpen, onClose, setCurrentPage }) => {
               <DrawerText>Acessar Perfil</DrawerText>
             </DrawerTextDiv>
           </DrawerItem>
-          <DrawerItem onClick={() => setCurrentPage('NewPost')}>
+          <DrawerItem onClick={handleNewPostClick}>
             <DrawerIconDiv>
               <DrawerIcon>
                 <MdPostAdd />

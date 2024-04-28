@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { IoPersonCircleOutline } from 'react-icons/io5';
 import Logo from './assets/vf.svg';
 import Drawer from './Drawer';
 import LoginPopup from './LoginPopup';
 import SignupPopup from './SignupPopup';
+import NewPost from './NewPost';
 
 const HeaderContainer = styled.header`
   background-color: #2c2040;
@@ -69,12 +70,11 @@ const ProfileIcon = styled.div`
   }
 `;
 
-const Header = ({ setCurrentPage }) => {
+const Header = ({ currentPage, setCurrentPage, isLoggedIn, user }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [showSignupPopup, setShowSignupPopup] = useState(false);
   const [registeredUsers, setRegisteredUsers] = useState([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
@@ -104,13 +104,8 @@ const Header = ({ setCurrentPage }) => {
     setRegisteredUsers([...registeredUsers, newUser]);
   };
 
-  const handleLoginSuccess = () => {
-    setIsLoggedIn(true);
-    console.log('Login bem-sucedido!');
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
+  const handleUserChange = (user) => {
+    setLoggedInUser(user);
   };
 
   return (
@@ -121,13 +116,13 @@ const Header = ({ setCurrentPage }) => {
           <Title>Vital Fórum</Title>
         </LeftSection>
         <RightSection>
-          {!isLoggedIn && (
+          {!user && (
             <>
               <MenuItem onClick={openLoginPopup}>Login</MenuItem>
               <MenuItem onClick={openSignupPopup}>Cadastre-se</MenuItem>
             </>
           )}
-          {isLoggedIn && (
+          {user && (
             <ProfileIcon onClick={toggleDrawer}>
               <IoPersonCircleOutline />
             </ProfileIcon>
@@ -136,6 +131,7 @@ const Header = ({ setCurrentPage }) => {
       </HeaderContainer>
       <Drawer
         setCurrentPage={setCurrentPage}
+        handleUserChange={handleUserChange}
         isOpen={isDrawerOpen}
         onClose={closeDrawer}
       />
@@ -143,11 +139,15 @@ const Header = ({ setCurrentPage }) => {
         <LoginPopup
           onClose={closeLoginPopup}
           registeredUsers={registeredUsers}
-          onLoginSuccess={handleLoginSuccess}
+          onLoginSuccess={isLoggedIn}
         />
       )}
       {showSignupPopup && (
         <SignupPopup onClose={closeSignupPopup} onSignup={handleSignup} />
+      )}
+
+      {isLoggedIn && currentPage === 'NewPost' && (
+        <NewPost currentPage={currentPage} loggedInUser={loggedInUser} />
       )}
     </>
   );

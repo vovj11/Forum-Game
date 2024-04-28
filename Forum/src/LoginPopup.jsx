@@ -71,22 +71,35 @@ const FormButtons = styled.div`
   justify-content: space-between;
 `;
 
-const LoginPopup = ({ onClose, registeredUsers, onLoginSuccess }) => {
+const LoginPopup = ({ onClose, onLoginSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const UrlDataBase =
+    'https://forum-gamificado-infnet-default-rtdb.firebaseio.com';
 
   const handleLogin = (e) => {
     e.preventDefault();
-    const user = registeredUsers.find(
-      (user) => user.email === email && user.password === password,
-    );
-    if (user) {
-      alert('Login bem-sucedido!');
-      onLoginSuccess(user);
-      onClose();
-    } else {
-      alert('Credenciais inválidas. Tente novamente.');
-    }
+
+    // Autenticação do usuário com dados em UrlDataBase
+    fetch(`${UrlDataBase}/users.json`)
+      .then((response) => response.json())
+      .then((data) => {
+        const usersList = Object.values(data || []);
+        const user = usersList.find(
+          (u) => u.email === email && u.password === password,
+        );
+        if (user) {
+          alert('Login bem-sucedido!');
+          onLoginSuccess(user);
+          onClose();
+        } else {
+          alert('Credenciais inválidas. Tente novamente.');
+        }
+      })
+      .catch((error) => {
+        console.error('Erro ao autenticar usuário:', error);
+        alert('Erro ao fazer login. Tente novamente mais tarde.');
+      });
   };
 
   return (
@@ -114,12 +127,8 @@ const LoginPopup = ({ onClose, registeredUsers, onLoginSuccess }) => {
           />
         </FormGroup>
         <FormButtons>
-          <LeftButton primary type="submit">
-            Login
-          </LeftButton>
-          <RightButton onClick={onClose} primary>
-            Fechar
-          </RightButton>
+          <LeftButton type="submit">Login</LeftButton>
+          <RightButton onClick={onClose}>Fechar</RightButton>
         </FormButtons>
       </Form>
     </PopupContainer>
