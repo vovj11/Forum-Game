@@ -6,6 +6,7 @@ import Drawer from './Drawer';
 import LoginPopup from './LoginPopup';
 import SignupPopup from './SignupPopup';
 import NewPost from './NewPost';
+import { useNavigate } from 'react-router-dom';
 
 const HeaderContainer = styled.header`
   background-color: #2c2040;
@@ -75,6 +76,7 @@ const Header = ({ currentPage, setCurrentPage, isLoggedIn, user }) => {
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [showSignupPopup, setShowSignupPopup] = useState(false);
   const [registeredUsers, setRegisteredUsers] = useState([]);
+  const navigate = useNavigate();
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
@@ -111,7 +113,7 @@ const Header = ({ currentPage, setCurrentPage, isLoggedIn, user }) => {
   return (
     <>
       <HeaderContainer>
-        <LeftSection onClick={() => setCurrentPage('Posts')}>
+        <LeftSection onClick={() => navigate('/')}>
           <LogoImg src={Logo} />
           <Title>Vital Fórum</Title>
         </LeftSection>

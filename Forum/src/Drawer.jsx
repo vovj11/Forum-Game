@@ -5,6 +5,7 @@ import { IoPersonCircleOutline } from 'react-icons/io5';
 import { MdPostAdd } from 'react-icons/md';
 import { FaSearch } from 'react-icons/fa';
 import { ImExit } from 'react-icons/im';
+import { useNavigate } from 'react-router-dom';
 
 const DrawerContainer = styled.div`
   background-color: #fff;
@@ -86,6 +87,7 @@ const DrawerText = styled.span`
 
 const Drawer = ({ isOpen, onClose, setCurrentPage, handleUserChange }) => {
   const drawerRef = useRef();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -102,7 +104,7 @@ const Drawer = ({ isOpen, onClose, setCurrentPage, handleUserChange }) => {
   }, [onClose]);
 
   const handleNewPostClick = () => {
-    setCurrentPage('NewPost');
+    navigate('/new-post');
     onClose();
     handleUserChange();
   };
@@ -112,7 +114,7 @@ const Drawer = ({ isOpen, onClose, setCurrentPage, handleUserChange }) => {
       <DrawerSobreposicao open={isOpen} />
       <DrawerContainer ref={drawerRef} open={isOpen}>
         <DrawerContent>
-          <DrawerItem onClick={() => setCurrentPage('Posts')}>
+          <DrawerItem onClick={() => navigate('/')}>
             <DrawerIconDiv>
               <DrawerIcon>
                 <IoMdHome />
@@ -122,7 +124,7 @@ const Drawer = ({ isOpen, onClose, setCurrentPage, handleUserChange }) => {
               <DrawerText>Home</DrawerText>
             </DrawerTextDiv>
           </DrawerItem>
-          <DrawerItem onClick={() => setCurrentPage('PerfilAccess')}>
+          <DrawerItem onClick={() => navigate('/perfil')}>
             <DrawerIconDiv>
               <DrawerIcon>
                 <IoPersonCircleOutline />
@@ -142,7 +144,7 @@ const Drawer = ({ isOpen, onClose, setCurrentPage, handleUserChange }) => {
               <DrawerText>Nova Publicação</DrawerText>
             </DrawerTextDiv>
           </DrawerItem>
-          <DrawerItem onClick={() => setCurrentPage('SearchPost')}>
+          <DrawerItem onClick={() => navigate('/search')}>
             <DrawerIconDiv>
               <DrawerIcon>
                 <FaSearch />

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Header from './Header';
 import Posts from './Posts';
@@ -6,6 +7,7 @@ import PerfilAccess from './PerfilAccess';
 import NewPost from './NewPost';
 import SearchPost from './SearchPost';
 import EditPost from './EditPost';
+import LoginRedirect from './LoginRedirect';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('Posts');
@@ -59,60 +61,64 @@ function App() {
     }
   };
 
-  const renderPage = () => {
-    switch (currentPage) {
-      case 'Posts':
-        return <Posts postsData={postsData} />;
-      case 'PerfilAccess':
-        return (
-          <PerfilAccess
-            user={loggedInUser}
-            posts={postsData}
-            fetchPosts={fetchPosts}
-            setCurrentPage={setCurrentPage}
-            editPostHandler={editPostHandler}
-          />
-        );
-      case 'NewPost':
-        return (
-          <NewPost
-            user={loggedInUser}
-            AttPage={() => setCurrentPage('Posts')}
-          />
-        );
-      case 'SearchPost':
-        return <SearchPost />;
-      case 'EditPost':
-        return (
-          <EditPost
-            postId={postToEdit?.id}
-            postData={postToEdit}
-            onUpdate={(postId, updatedData) => {
-              fetch(`${UrlDataBase}/PostsData/${postId}.json`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(updatedData),
-              }).then(() => {
-                fetchPosts();
-                setCurrentPage('Posts');
-              });
-            }}
-          />
-        );
-      default:
-        return <Posts postsData={postsData} />;
-    }
-  };
-
   return (
-    <main>
-      <Header
-        setCurrentPage={setCurrentPage}
-        isLoggedIn={handleLoginSuccess}
-        user={loggedInUser}
-      />
-      {renderPage()}
-    </main>
+    <Router>
+      <main>
+        <Header
+          setCurrentPage={setCurrentPage}
+          isLoggedIn={handleLoginSuccess}
+          user={loggedInUser}
+        />
+        <Routes>
+          <Route path="/" element={<Posts postsData={postsData} />} />{' '}
+          <Route
+            path="/perfil"
+            element={
+              <PerfilAccess
+                user={loggedInUser}
+                posts={postsData}
+                fetchPosts={fetchPosts}
+                setCurrentPage={setCurrentPage}
+                editPostHandler={editPostHandler}
+              />
+            }
+          />
+          <Route
+            path="/new-post"
+            element={
+              loggedInUser ? (
+                <NewPost
+                  user={loggedInUser}
+                  AttPage={() => setCurrentPage('Posts')}
+                />
+              ) : (
+                <LoginRedirect />
+              )
+            }
+          />
+          <Route path="/search" element={<SearchPost />} />
+          <Route
+            path="/edit/:postId"
+            element={
+              <EditPost
+                postId={postToEdit?.id}
+                postData={postToEdit}
+                onUpdate={(postId, updatedData) => {
+                  fetch(`${UrlDataBase}/PostsData/${postId}.json`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updatedData),
+                  }).then(() => {
+                    fetchPosts();
+                    setCurrentPage('Posts');
+                  });
+                }}
+              />
+            }
+          />
+        </Routes>
+      </main>
+    </Router>
   );
 }
 
