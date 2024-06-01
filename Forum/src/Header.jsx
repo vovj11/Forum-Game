@@ -125,13 +125,14 @@ const Header = ({ currentPage, setCurrentPage, isLoggedIn, user }) => {
             </>
           )}
           {user && (
-            <ProfileIcon onClick={toggleDrawer}>
+            <ProfileIcon id="profile-icon" onClick={toggleDrawer}>
               <IoPersonCircleOutline />
             </ProfileIcon>
           )}
         </RightSection>
       </HeaderContainer>
       <Drawer
+        id="drawer"
         setCurrentPage={setCurrentPage}
         handleUserChange={handleUserChange}
         isOpen={isDrawerOpen}

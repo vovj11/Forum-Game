@@ -79,6 +79,7 @@ const SignupPopup = ({ onClose, onSignup }) => {
     'https://forum-gamificado-infnet-default-rtdb.firebaseio.com';
 
   const [existingUsers, setExistingUsers] = useState([]);
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -87,12 +88,14 @@ const SignupPopup = ({ onClose, onSignup }) => {
 
         if (data) {
           const topics = Object.values(data);
-          setPostsData(topics);
+          setExistingUsers(topics);
         }
       } catch (error) {
         console.error('Erro ao buscar os tópicos:', error);
       }
     };
+
+    fetchPosts();
   }, []);
 
   const isEmailTaken = (email) => {
@@ -101,7 +104,6 @@ const SignupPopup = ({ onClose, onSignup }) => {
 
   const handleSignup = (e) => {
     e.preventDefault();
-    onSignup({ name, email, password });
 
     if (isEmailTaken(email)) {
       alert('O email já está em uso.');
@@ -114,6 +116,7 @@ const SignupPopup = ({ onClose, onSignup }) => {
       password,
       score: 0,
     };
+
     fetch(`${UrlDataBase}/users.json`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -121,9 +124,11 @@ const SignupPopup = ({ onClose, onSignup }) => {
     })
       .then((response) => {
         if (response.ok) {
+          alert('Cadastro bem-sucedido!');
           setName('');
           setEmail('');
           setPassword('');
+          onSignup({ name, email, password });
         } else {
           throw new Error('Erro ao criar o usuário.');
         }
@@ -131,6 +136,7 @@ const SignupPopup = ({ onClose, onSignup }) => {
       .catch((error) => {
         console.error(`Erro ao criar o usuário: ${error.message}`);
       });
+
     onClose();
   };
 
@@ -170,7 +176,9 @@ const SignupPopup = ({ onClose, onSignup }) => {
         </FormGroup>
         <FormButtons>
           <LeftButton type="submit">Cadastre-se</LeftButton>
-          <RightButton onClick={onClose}>Fechar</RightButton>
+          <RightButton type="button" onClick={onClose}>
+            Fechar
+          </RightButton>
         </FormButtons>
       </Form>
     </PopupContainer>
